@@ -1,0 +1,23 @@
+#pragma once
+#include <Imagina/evaluator>
+
+namespace Perturbation {
+	using namespace Imagina;
+
+	class PerturbationEvaluator : public SimpleEvaluator {
+		using real = SRReal;
+		using complex = SRComplex;
+		struct Output {
+			double Value;
+		};
+
+		uint64_t referenceLength;
+		complex *reference = nullptr;
+
+	public:
+		const PixelDataInfo *GetOutputInfo();
+
+		virtual void Precompute() override;
+		virtual void Evaluate(IRasterizingInterface rasterizingInterface) override;
+	};
+}
