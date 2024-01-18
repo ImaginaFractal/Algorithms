@@ -1,23 +1,13 @@
 #include <Imagina/module>
-#include <iterator> // For std::size()
 #include "Perturbation"
 
-Imagina::ComponentInfo ComponentInfo[]{
-	{
-		.Name = "PerturbationEvaluator",
-		.DisplayName = "Sample Perturbation Evaluator",
-		.Create = [](const char *)->Imagina::IAny { return Imagina::IEvaluator(new Perturbation::PerturbationEvaluator); },
-		.Type = Imagina::ComponentType::Evaluator,
-	}
-};
+using namespace Imagina;
 
-Imagina::ModuleInfo ModuleInfo{
-	.Name = "SampleEvaluators",
-	.DisplayName = "Sample Evaluators",
-	.ComponentCount = std::size(ComponentInfo),
-	.Components = ComponentInfo,
+constexpr ComponentInfo Components[]{
+	ComponentInfo::Evaluator<Perturbation::PerturbationEvaluator>("PerturbationEvaluator", "Sample Perturbation Evaluator"),
 };
+constexpr ModuleInfo Module("SampleEvaluators", "Sample Evaluators", Components);
 
 extern "C" __declspec(dllexport) const Imagina::ModuleInfo *ImGetModuleInfo() {
-	return &ModuleInfo;
+	return &Module;
 }
