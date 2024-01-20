@@ -8,6 +8,6 @@ constexpr ComponentInfo Components[]{
 };
 constexpr ModuleInfo Module("SampleEvaluators", "Sample Evaluators", Components);
 
-extern "C" __declspec(dllexport) const Imagina::ModuleInfo *ImGetModuleInfo() {
+im_api const Imagina::ModuleInfo *ImGetModuleInfo() {
 	return &Module;
 }
