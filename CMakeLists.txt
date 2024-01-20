@@ -8,9 +8,8 @@ endif ()
 
 set(SourceFiles "module.cpp" "Perturbation.cpp")
 
-add_library (SampleEvaluators SHARED ${SourceFiles})
+add_library (SampleEvaluators MODULE ${SourceFiles})
 set_target_properties (SampleEvaluators PROPERTIES PREFIX "")
-set_target_properties (SampleEvaluators PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/modules")
 target_link_libraries (SampleEvaluators ImaginaCore)
 target_link_libraries (SampleEvaluators ImaginaCommon)
 
