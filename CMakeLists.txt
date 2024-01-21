@@ -6,7 +6,7 @@ if (NOT TARGET ImaginaCore)
 	add_subdirectory ("../Core" Core)
 endif ()
 
-set(SourceFiles "module.cpp" "Perturbation.cpp")
+set(SourceFiles "module.cpp" "Perturbation.cpp" "HInfLA.cpp")
 
 add_library (SampleEvaluators MODULE ${SourceFiles})
 set_target_properties (SampleEvaluators PROPERTIES PREFIX "")
