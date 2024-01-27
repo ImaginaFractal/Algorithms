@@ -1,5 +1,6 @@
 #include <Imagina/module>
 #include "Perturbation"
+#include "PTWithCompression"
 #include "HInfLA"
 #include "MipLA"
 
@@ -7,6 +8,7 @@ using namespace Imagina;
 
 constexpr ComponentInfo Components[]{
 	ComponentInfo::Evaluator<Perturbation::PerturbationEvaluator>("PerturbationEvaluator", "Sample Perturbation Evaluator"),
+	ComponentInfo::Evaluator<PTWithCompression::PTWithCompressionEvaluator>("PTWithCompression", "Sample Perturbation With Compression Evaluator"),
 	ComponentInfo::Evaluator<HinfLA::HInfLAEvaluator>("HInfLAEvaluator", "Sample HInf LA Evaluator"),
 	ComponentInfo::Evaluator<MipLA::MipLAEvaluator>("MipLAEvaluator", "Sample Mip LA Evaluator"),
 };
