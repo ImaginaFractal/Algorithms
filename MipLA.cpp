@@ -39,7 +39,7 @@ namespace MipLA {
 
 			reference[i] = z;
 
-			if (radius * ChebyshevNorm(dzdc) * 2.0 > ChebyshevNorm(z)) break;
+			if (radius * chebyshev_norm(dzdc) * 2.0 > chebyshev_norm(z)) break;
 			if (norm(z) > 16.0) break;
 		};
 

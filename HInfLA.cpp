@@ -39,7 +39,7 @@ namespace HinfLA {
 
 			reference[i] = z;
 
-			if (radius * ChebyshevNorm(dzdc) * 2.0 > ChebyshevNorm(z)) break;
+			if (radius * chebyshev_norm(dzdc) * 2.0 > chebyshev_norm(z)) break;
 			if (norm(z) > 16.0) break;
 		};
 
@@ -174,7 +174,7 @@ namespace HinfLA {
 		while (rasterizingInterface.GetPixel(x, y)) {
 			complex dc = { real(x), real(y) };
 			complex Z = 0.0, z = 0.0, dz = 0.0;
-			real norm_dc = ChebyshevNorm(dc);
+			real norm_dc = chebyshev_norm(dc);
 
 			ITUInt i = 0, j = 0;
 			size_t stage = LAStages.size();
@@ -189,7 +189,7 @@ namespace HinfLA {
 					LAStep &step = LASteps[j];
 					complex new_dz = dz * (step.Z + z);
 
-					if (ChebyshevNorm(new_dz) > step.ValidRadius || norm_dc > step.ValidRadiusC) {
+					if (chebyshev_norm(new_dz) > step.ValidRadius || norm_dc > step.ValidRadiusC) {
 						j = step.NextStageLAIndex;
 						break;
 					}
@@ -201,8 +201,8 @@ namespace HinfLA {
 
 					z = dz + LASteps[j].Z;
 
-					real normDz = ChebyshevNorm(dz);
-					if (j == end || ChebyshevNorm(z) < ChebyshevNorm(dz)) {
+					real normDz = chebyshev_norm(dz);
+					if (j == end || chebyshev_norm(z) < chebyshev_norm(dz)) {
 						j = begin;
 						dz = z;
 					}

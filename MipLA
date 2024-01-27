@@ -7,7 +7,7 @@ namespace MipLA {
 
 	inline SRReal magnitude(const SRComplex &z) {
 		//return std::abs(z);
-		return ChebyshevNorm(z);
+		return chebyshev_norm(z);
 	}
 
 	struct LAStep {
