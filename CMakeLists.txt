@@ -1,6 +1,6 @@
 cmake_minimum_required (VERSION 3.8)
 
-project ("SampleEvaluators")
+project ("Algorithms")
 
 if (NOT TARGET ImaginaCore)
 	add_subdirectory ("../Core" Core)
@@ -8,9 +8,9 @@ endif ()
 
 set(SourceFiles "module.cpp" "Perturbation.cpp" "HInfLA.cpp" "MipLA.cpp" "PTWithCompression.cpp")
 
-add_library (SampleEvaluators MODULE ${SourceFiles})
-set_target_properties (SampleEvaluators PROPERTIES PREFIX "")
-target_link_libraries (SampleEvaluators ImaginaCore)
-target_link_libraries (SampleEvaluators ImaginaCommon)
+add_library (Algorithms MODULE ${SourceFiles})
+set_target_properties (Algorithms PROPERTIES PREFIX "")
+target_link_libraries (Algorithms ImaginaCore)
+target_link_libraries (Algorithms ImaginaCommon)
 
-set_target_properties (SampleEvaluators PROPERTIES CXX_STANDARD 20)
+set_target_properties (Algorithms PROPERTIES CXX_STANDARD 20)
