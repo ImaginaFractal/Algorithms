@@ -201,7 +201,6 @@ namespace HinfLA {
 
 					z = dz + LASteps[j].Z;
 
-					real normDz = chebyshev_norm(dz);
 					if (j == end || chebyshev_norm(z) < chebyshev_norm(dz)) {
 						j = begin;
 						dz = z;
