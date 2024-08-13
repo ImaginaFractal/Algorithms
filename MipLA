@@ -64,3 +64,5 @@ namespace MipLA {
 		virtual void Evaluate(IRasterizingInterface rasterizingInterface) override;
 	};
 }
+
+IMPLEMENT_INTERFACE(MipLA::MipLAEvaluator, Imagina::IEvaluator);

@@ -2,8 +2,6 @@
 #include <Imagina/output_info_helper>
 #include "HInfLA"
 
-IMPLEMENT_INTERFACE(HinfLA::HInfLAEvaluator, Imagina::IEvaluator);
-
 namespace HinfLA {
 	const Imagina::PixelDataInfo *HInfLAEvaluator::GetOutputInfo() {
 		IM_GET_OUTPUT_INFO_IMPL(Output, Value);

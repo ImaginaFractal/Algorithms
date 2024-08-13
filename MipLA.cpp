@@ -2,8 +2,6 @@
 #include <Imagina/output_info_helper>
 #include <Imagina/pixel_management>
 
-IMPLEMENT_INTERFACE(MipLA::MipLAEvaluator, Imagina::IEvaluator);
-
 namespace MipLA {
 	const PixelDataInfo *MipLAEvaluator::GetOutputInfo() {
 		IM_GET_OUTPUT_INFO_IMPL(Output, Value);

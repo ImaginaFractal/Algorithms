@@ -2,8 +2,6 @@
 #include <Imagina/output_info_helper>
 #include <Imagina/pixel_management>
 
-IMPLEMENT_INTERFACE(Perturbation::PerturbationEvaluator, Imagina::IEvaluator);
-
 namespace Perturbation {
 	const PixelDataInfo *PerturbationEvaluator::GetOutputInfo() {
 		IM_GET_OUTPUT_INFO_IMPL(Output, Value);

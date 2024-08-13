@@ -21,3 +21,5 @@ namespace Perturbation {
 		virtual void Evaluate(IRasterizingInterface rasterizingInterface) override;
 	};
 }
+
+IMPLEMENT_INTERFACE(Perturbation::PerturbationEvaluator, Imagina::IEvaluator);

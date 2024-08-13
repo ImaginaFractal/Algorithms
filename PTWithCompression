@@ -97,3 +97,5 @@ namespace PTWithCompression {
 		virtual void Evaluate(IRasterizingInterface rasterizingInterface) override;
 	};
 }
+
+IMPLEMENT_INTERFACE(PTWithCompression::PTWithCompressionEvaluator, Imagina::IEvaluator);
