@@ -11,6 +11,5 @@ set(SourceFiles "module.cpp" "Perturbation.cpp" "HInfLA.cpp" "MipLA.cpp" "PTWith
 add_library (Algorithms MODULE ${SourceFiles})
 set_target_properties (Algorithms PROPERTIES PREFIX "")
 target_link_libraries (Algorithms ImaginaCore)
-target_link_libraries (Algorithms ImaginaCommon)
 
 set_target_properties (Algorithms PROPERTIES CXX_STANDARD 20)
