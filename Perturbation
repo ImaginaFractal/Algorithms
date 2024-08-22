@@ -4,12 +4,14 @@
 namespace Perturbation {
 	using namespace Imagina;
 
-	class PerturbationEvaluator : public SimpleEvaluator {
+	class PerturbationEvaluator {
 		using real = SRReal;
 		using complex = SRComplex;
 		struct Output {
 			double Value;
 		};
+
+		StandardEvaluationParameters parameters;
 
 		uint64_t referenceLength;
 		complex *reference = nullptr;
@@ -17,8 +19,8 @@ namespace Perturbation {
 	public:
 		const PixelDataInfo *GetOutputInfo();
 
-		virtual void Precompute() override;
-		virtual void Evaluate(IRasterizingInterface rasterizingInterface) override;
+		void Precompute(const HPReal &x, const HPReal &y, HRReal radius, const StandardEvaluationParameters &parameters);
+		void Evaluate(IRasterizingInterface rasterizingInterface);
 	};
 }
 

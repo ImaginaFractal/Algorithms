@@ -41,18 +41,20 @@ namespace MipLA {
 		}
 	};
 
-	class MipLAEvaluator : public SimpleEvaluator {
+	class MipLAEvaluator {
 		using real = SRReal;
 		using complex = SRComplex;
 		struct Output {
 			double Value;
 		};
 
+		StandardEvaluationParameters parameters;
+
 		uint64_t referenceLength;
 		complex *reference = nullptr;
 		std::vector<std::vector<LAStep>> LAData;
 
-		void ComputeOrbit();
+		void ComputeOrbit(const HPReal &x, const HPReal &y, HRReal radius);
 		void CreateLAFromOrbit();
 		bool CreateNewLALevel();
 		std::pair<LAStep *, size_t> Lookup(size_t i, real norm_dz, real norm_dc);
@@ -60,8 +62,8 @@ namespace MipLA {
 	public:
 		const PixelDataInfo *GetOutputInfo();
 
-		virtual void Precompute() override;
-		virtual void Evaluate(IRasterizingInterface rasterizingInterface) override;
+		void Precompute(const HPReal &x, const HPReal &y, HRReal radius, const StandardEvaluationParameters &parameters);
+		void Evaluate(IRasterizingInterface rasterizingInterface);
 	};
 }
 

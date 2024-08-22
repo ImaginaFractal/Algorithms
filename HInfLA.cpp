@@ -7,18 +7,19 @@ namespace HinfLA {
 		IM_GET_OUTPUT_INFO_IMPL(Output, Value);
 	}
 
-	void HInfLAEvaluator::Precompute() {
+	void HInfLAEvaluator::Precompute(const HPReal &x, const HPReal &y, HRReal radius, const StandardEvaluationParameters &parameters) {
+		this->parameters = parameters;
 		delete[] reference;
 		LAStages.clear();
 		LASteps.clear();
 
-		ComputeOrbit();
+		ComputeOrbit(x, y, radius);
 		if (referenceLength < 8) return;
 
 		if (!CreateLAFromOrbit()) return;
 		while (CreateNewLAStage());
 	}
-	void HInfLAEvaluator::ComputeOrbit() {
+	void HInfLAEvaluator::ComputeOrbit(const HPReal &x, const HPReal &y, HRReal radius) {
 		reference = new complex[parameters.Iterations + 1];
 
 		HPComplex C = HPComplex(x, y);

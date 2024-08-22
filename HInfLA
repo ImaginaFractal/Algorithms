@@ -83,7 +83,7 @@ namespace HinfLA {
 		}
 	};
 
-	class HInfLAEvaluator : public SimpleEvaluator {
+	class HInfLAEvaluator {
 		using real = SRReal;
 		using complex = SRComplex;
 		struct Output {
@@ -95,21 +95,23 @@ namespace HinfLA {
 			uint64_t End;
 		};
 
+		StandardEvaluationParameters parameters;
+
 		uint64_t referenceLength;
 		complex *reference = nullptr;
 
 		std::vector<LAStageInfo> LAStages;
 		std::vector<LAStep> LASteps;
 
-		void ComputeOrbit();
+		void ComputeOrbit(const HPReal &x, const HPReal &y, HRReal radius);
 		bool CreateLAFromOrbit();
 		bool CreateNewLAStage();
 
 	public:
 		const PixelDataInfo *GetOutputInfo();
 
-		virtual void Precompute() override;
-		virtual void Evaluate(IRasterizingInterface rasterizingInterface) override;
+		void Precompute(const HPReal &x, const HPReal &y, HRReal radius, const StandardEvaluationParameters &parameters);
+		void Evaluate(IRasterizingInterface rasterizingInterface);
 	};
 }
 

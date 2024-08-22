@@ -83,18 +83,20 @@ namespace PTWithCompression {
 		}
 	};
 
-	class PTWithCompressionEvaluator : public SimpleEvaluator {
+	class PTWithCompressionEvaluator {
 		struct Output {
 			double Value;
 		};
+
+		StandardEvaluationParameters parameters;
 
 		CompressedReference reference;
 
 	public:
 		const PixelDataInfo *GetOutputInfo();
 
-		virtual void Precompute() override;
-		virtual void Evaluate(IRasterizingInterface rasterizingInterface) override;
+		void Precompute(const HPReal &x, const HPReal &y, HRReal radius, const StandardEvaluationParameters &parameters);
+		void Evaluate(IRasterizingInterface rasterizingInterface);
 	};
 }
 

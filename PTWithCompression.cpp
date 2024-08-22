@@ -7,7 +7,8 @@ namespace PTWithCompression {
 		IM_GET_OUTPUT_INFO_IMPL(Output, Value);
 	}
 
-	void PTWithCompressionEvaluator::Precompute() {
+	void PTWithCompressionEvaluator::Precompute(const HPReal &x, const HPReal &y, HRReal radius, const StandardEvaluationParameters &parameters) {
+		this->parameters = parameters;
 		HPComplex C = HPComplex(x, y);
 		HPComplex Z = C;
 		complex z = complex(Z), dzdc = 1.0;

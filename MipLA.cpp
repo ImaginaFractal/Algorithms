@@ -7,18 +7,19 @@ namespace MipLA {
 		IM_GET_OUTPUT_INFO_IMPL(Output, Value);
 	}
 
-	void MipLAEvaluator::Precompute() {
+	void MipLAEvaluator::Precompute(const HPReal &x, const HPReal &y, HRReal radius, const StandardEvaluationParameters &parameters) {
+		this->parameters = parameters;
 		delete[] reference;
 		LAData.clear();
 
-		ComputeOrbit();
+		ComputeOrbit(x, y, radius);
 		if (referenceLength < 8) return;
 
 		CreateLAFromOrbit();
 		while (CreateNewLALevel());
 	}
 
-	void MipLAEvaluator::ComputeOrbit() {
+	void MipLAEvaluator::ComputeOrbit(const HPReal &x, const HPReal &y, HRReal radius) {
 		reference = new complex[parameters.Iterations + 1];
 
 		HPComplex C = HPComplex(x, y);
