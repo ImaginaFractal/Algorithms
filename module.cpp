@@ -1,4 +1,4 @@
-#include <Imagina/module>
+#include <imagina/module.h>
 #include "Perturbation"
 #include "PTWithCompression"
 #include "HInfLA"

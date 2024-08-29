@@ -1,6 +1,6 @@
 #include "MipLA"
-#include <Imagina/output_info_helper>
-#include <Imagina/pixel_management>
+#include <imagina/output_info_helper.h>
+#include <imagina/pixel_management.h>
 
 namespace MipLA {
 	const PixelDataInfo *MipLAEvaluator::GetOutputInfo() {

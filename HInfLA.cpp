@@ -1,5 +1,5 @@
-#include <Imagina/pixel_management>
-#include <Imagina/output_info_helper>
+#include <imagina/pixel_management.h>
+#include <imagina/output_info_helper.h>
 #include "HInfLA"
 
 namespace HinfLA {
