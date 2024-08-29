@@ -7,7 +7,7 @@ namespace Perturbation {
 		IM_GET_OUTPUT_INFO_IMPL(Output, Value);
 	}
 
-	void PerturbationEvaluator::Precompute(const HPReal &x, const HPReal &y, HRReal radius, const StandardEvaluationParameters &parameters) {
+	void PerturbationEvaluator::Prepare(const HPReal &x, const HPReal &y, HRReal radius, const StandardEvaluationParameters &parameters) {
 		this->parameters = parameters;
 		delete[] reference;
 		reference = new complex[parameters.Iterations + 1];

@@ -7,7 +7,7 @@ namespace MipLA {
 		IM_GET_OUTPUT_INFO_IMPL(Output, Value);
 	}
 
-	void MipLAEvaluator::Precompute(const HPReal &x, const HPReal &y, HRReal radius, const StandardEvaluationParameters &parameters) {
+	void MipLAEvaluator::Prepare(const HPReal &x, const HPReal &y, HRReal radius, const StandardEvaluationParameters &parameters) {
 		this->parameters = parameters;
 		delete[] reference;
 		LAData.clear();
