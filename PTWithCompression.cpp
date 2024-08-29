@@ -1,4 +1,4 @@
-#include "PTWithCompression"
+#include "PTWithCompression.h"
 #include <imagina/output_info_helper.h>
 #include <imagina/pixel_management.h>
 

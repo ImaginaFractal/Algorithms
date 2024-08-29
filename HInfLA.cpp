@@ -1,6 +1,6 @@
 #include <imagina/pixel_management.h>
 #include <imagina/output_info_helper.h>
-#include "HInfLA"
+#include "HInfLA.h"
 
 namespace HinfLA {
 	const Imagina::PixelDataInfo *HInfLAEvaluator::GetOutputInfo() {

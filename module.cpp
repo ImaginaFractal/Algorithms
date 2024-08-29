@@ -1,8 +1,8 @@
 #include <imagina/module.h>
-#include "Perturbation"
-#include "PTWithCompression"
-#include "HInfLA"
-#include "MipLA"
+#include "Perturbation.h"
+#include "PTWithCompression.h"
+#include "HInfLA.h"
+#include "MipLA.h"
 
 using namespace Imagina;
 
