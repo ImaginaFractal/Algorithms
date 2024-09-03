@@ -6,7 +6,7 @@ namespace Perturbation {
 
 	class PerturbationEvaluator {
 		using real = real_sr;
-		using complex = SRComplex;
+		using complex = complex_sr;
 		struct Output {
 			double Value;
 		};

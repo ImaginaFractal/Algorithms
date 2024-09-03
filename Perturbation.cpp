@@ -11,8 +11,8 @@ namespace Perturbation {
 		this->parameters = parameters;
 		delete[] reference;
 		reference = new complex[parameters.Iterations + 1];
-		HPComplex C = HPComplex(x, y);
-		HPComplex Z = C;
+		complex_hp C = complex_hp(x, y);
+		complex_hp Z = C;
 
 		reference[0] = 0.0;
 		reference[1] = complex(Z);

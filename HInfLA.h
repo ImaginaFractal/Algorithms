@@ -5,14 +5,14 @@
 namespace HinfLA {
 	using namespace Imagina;
 
-	inline real_sr magnitude(const SRComplex &z) {
+	inline real_sr magnitude(const complex_sr &z) {
 		//return std::abs(z);
 		return chebyshev_norm(z);
 	}
 
 	struct LAStep {
 		using real = real_sr;
-		using complex = SRComplex;
+		using complex = complex_sr;
 
 		static constexpr real ValidRadiusScale = 0x1.0p-24;
 		static constexpr real DipDetectionThreshold = 0x1.0p-10;
@@ -85,7 +85,7 @@ namespace HinfLA {
 
 	class HInfLAEvaluator {
 		using real = real_sr;
-		using complex = SRComplex;
+		using complex = complex_sr;
 		struct Output {
 			double Value;
 		};

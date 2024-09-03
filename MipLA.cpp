@@ -22,8 +22,8 @@ namespace MipLA {
 	void MipLAEvaluator::ComputeOrbit(const real_hp &x, const real_hp &y, real_hr radius) {
 		reference = new complex[parameters.Iterations + 1];
 
-		HPComplex C = HPComplex(x, y);
-		HPComplex Z = C;
+		complex_hp C = complex_hp(x, y);
+		complex_hp Z = C;
 		complex z = complex(Z), dzdc = 1.0;
 
 		reference[0] = 0.0;

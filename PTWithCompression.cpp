@@ -9,8 +9,8 @@ namespace PTWithCompression {
 
 	void PTWithCompressionEvaluator::Prepare(const real_hp &x, const real_hp &y, real_hr radius, const StandardEvaluationParameters &parameters) {
 		this->parameters = parameters;
-		HPComplex C = HPComplex(x, y);
-		HPComplex Z = C;
+		complex_hp C = complex_hp(x, y);
+		complex_hp Z = C;
 		complex z = complex(Z), dzdc = 1.0;
 
 		ReferenceCompressor compressor(reference, complex(C));

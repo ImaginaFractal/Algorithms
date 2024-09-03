@@ -5,7 +5,7 @@
 namespace PTWithCompression {
 	using namespace Imagina;
 	using real = real_sr;
-	using complex = SRComplex;
+	using complex = complex_sr;
 
 	struct Waypoint {
 		complex Z;
@@ -14,7 +14,7 @@ namespace PTWithCompression {
 
 	struct CompressedReference {
 		std::vector<Waypoint> Waypoints;
-		SRComplex C;
+		complex_sr C;
 	};
 
 	class ReferenceCompressor {
@@ -24,7 +24,7 @@ namespace PTWithCompression {
 		real tolerance = 0x1p-32;
 
 	public:
-		ReferenceCompressor(CompressedReference &reference, SRComplex C, real tolerance = 0x1p-32)
+		ReferenceCompressor(CompressedReference &reference, complex_sr C, real tolerance = 0x1p-32)
 			: reference(reference), c(C), tolerance(tolerance) {
 			reference.Waypoints.clear();
 			reference.C = C;
