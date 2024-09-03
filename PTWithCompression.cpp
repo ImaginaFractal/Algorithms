@@ -7,7 +7,7 @@ namespace PTWithCompression {
 		IM_GET_OUTPUT_INFO_IMPL(Output, Value);
 	}
 
-	void PTWithCompressionEvaluator::Prepare(const HPReal &x, const HPReal &y, HRReal radius, const StandardEvaluationParameters &parameters) {
+	void PTWithCompressionEvaluator::Prepare(const real_hp &x, const real_hp &y, real_hr radius, const StandardEvaluationParameters &parameters) {
 		this->parameters = parameters;
 		HPComplex C = HPComplex(x, y);
 		HPComplex Z = C;
@@ -32,14 +32,14 @@ namespace PTWithCompression {
 	}
 
 	void PTWithCompressionEvaluator::Evaluate(IRasterizingInterface rasterizingInterface) {
-		HRReal x, y;
+		real_hr x, y;
 		while (rasterizingInterface.GetPixel(x, y)) {
 			complex dc = { real(x), real(y) };
 			complex Z = 0.0, z = 0.0, dz = 0.0;
 
 			ReferenceDecompressor decompressor(reference);
 
-			ITUInt i = 0;
+			uint_iter i = 0;
 			while (i < parameters.Iterations) {
 				dz = dz * (Z + z) + dc;
 				i++;

@@ -7,7 +7,7 @@ namespace HinfLA {
 		IM_GET_OUTPUT_INFO_IMPL(Output, Value);
 	}
 
-	void HInfLAEvaluator::Prepare(const HPReal &x, const HPReal &y, HRReal radius, const StandardEvaluationParameters &parameters) {
+	void HInfLAEvaluator::Prepare(const real_hp &x, const real_hp &y, real_hr radius, const StandardEvaluationParameters &parameters) {
 		this->parameters = parameters;
 		delete[] reference;
 		LAStages.clear();
@@ -19,7 +19,7 @@ namespace HinfLA {
 		if (!CreateLAFromOrbit()) return;
 		while (CreateNewLAStage());
 	}
-	void HInfLAEvaluator::ComputeOrbit(const HPReal &x, const HPReal &y, HRReal radius) {
+	void HInfLAEvaluator::ComputeOrbit(const real_hp &x, const real_hp &y, real_hr radius) {
 		reference = new complex[parameters.Iterations + 1];
 
 		HPComplex C = HPComplex(x, y);
@@ -169,13 +169,13 @@ namespace HinfLA {
 	}
 
 	void HInfLAEvaluator::Evaluate(IRasterizingInterface rasterizingInterface) {
-		HRReal x, y;
+		real_hr x, y;
 		while (rasterizingInterface.GetPixel(x, y)) {
 			complex dc = { real(x), real(y) };
 			complex Z = 0.0, z = 0.0, dz = 0.0;
 			real norm_dc = chebyshev_norm(dc);
 
-			ITUInt i = 0, j = 0;
+			uint_iter i = 0, j = 0;
 			size_t stage = LAStages.size();
 			if (LAStages.size()) j = LAStages.back().Begin;
 

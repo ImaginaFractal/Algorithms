@@ -5,13 +5,13 @@
 namespace MipLA {
 	using namespace Imagina;
 
-	inline SRReal magnitude(const SRComplex &z) {
+	inline real_sr magnitude(const SRComplex &z) {
 		//return std::abs(z);
 		return chebyshev_norm(z);
 	}
 
 	struct LAStep {
-		using real = SRReal;
+		using real = real_sr;
 		using complex = SRComplex;
 
 		static constexpr real ValidRadiusScale = 0x1.0p-24;
@@ -42,7 +42,7 @@ namespace MipLA {
 	};
 
 	class MipLAEvaluator {
-		using real = SRReal;
+		using real = real_sr;
 		using complex = SRComplex;
 		struct Output {
 			double Value;
@@ -54,7 +54,7 @@ namespace MipLA {
 		complex *reference = nullptr;
 		std::vector<std::vector<LAStep>> LAData;
 
-		void ComputeOrbit(const HPReal &x, const HPReal &y, HRReal radius);
+		void ComputeOrbit(const real_hp &x, const real_hp &y, real_hr radius);
 		void CreateLAFromOrbit();
 		bool CreateNewLALevel();
 		std::pair<LAStep *, size_t> Lookup(size_t i, real norm_dz, real norm_dc);
@@ -62,7 +62,7 @@ namespace MipLA {
 	public:
 		const PixelDataInfo *GetOutputInfo();
 
-		void Prepare(const HPReal &x, const HPReal &y, HRReal radius, const StandardEvaluationParameters &parameters);
+		void Prepare(const real_hp &x, const real_hp &y, real_hr radius, const StandardEvaluationParameters &parameters);
 		void Evaluate(IRasterizingInterface rasterizingInterface);
 	};
 }

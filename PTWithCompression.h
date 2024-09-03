@@ -4,12 +4,12 @@
 
 namespace PTWithCompression {
 	using namespace Imagina;
-	using real = SRReal;
+	using real = real_sr;
 	using complex = SRComplex;
 
 	struct Waypoint {
 		complex Z;
-		ITUInt Iteration;
+		uint_iter Iteration;
 	};
 
 	struct CompressedReference {
@@ -20,7 +20,7 @@ namespace PTWithCompression {
 	class ReferenceCompressor {
 		CompressedReference &reference;
 		complex z = 0.0, c = 0.0;
-		ITUInt iteration = 0;
+		uint_iter iteration = 0;
 		real tolerance = 0x1p-32;
 
 	public:
@@ -50,7 +50,7 @@ namespace PTWithCompression {
 
 		const CompressedReference &reference;
 		complex Z = 0.0;
-		ITUInt iteration = 0;
+		uint_iter iteration = 0;
 		Iterator nextWaypoint;
 
 	public:
@@ -95,7 +95,7 @@ namespace PTWithCompression {
 	public:
 		const PixelDataInfo *GetOutputInfo();
 
-		void Prepare(const HPReal &x, const HPReal &y, HRReal radius, const StandardEvaluationParameters &parameters);
+		void Prepare(const real_hp &x, const real_hp &y, real_hr radius, const StandardEvaluationParameters &parameters);
 		void Evaluate(IRasterizingInterface rasterizingInterface);
 	};
 }

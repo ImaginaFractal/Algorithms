@@ -5,7 +5,7 @@ namespace Perturbation {
 	using namespace Imagina;
 
 	class PerturbationEvaluator {
-		using real = SRReal;
+		using real = real_sr;
 		using complex = SRComplex;
 		struct Output {
 			double Value;
@@ -19,7 +19,7 @@ namespace Perturbation {
 	public:
 		const PixelDataInfo *GetOutputInfo();
 
-		void Prepare(const HPReal &x, const HPReal &y, HRReal radius, const StandardEvaluationParameters &parameters);
+		void Prepare(const real_hp &x, const real_hp &y, real_hr radius, const StandardEvaluationParameters &parameters);
 		void Evaluate(IRasterizingInterface rasterizingInterface);
 	};
 }

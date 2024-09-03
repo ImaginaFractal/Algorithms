@@ -7,7 +7,7 @@ namespace Perturbation {
 		IM_GET_OUTPUT_INFO_IMPL(Output, Value);
 	}
 
-	void PerturbationEvaluator::Prepare(const HPReal &x, const HPReal &y, HRReal radius, const StandardEvaluationParameters &parameters) {
+	void PerturbationEvaluator::Prepare(const real_hp &x, const real_hp &y, real_hr radius, const StandardEvaluationParameters &parameters) {
 		this->parameters = parameters;
 		delete[] reference;
 		reference = new complex[parameters.Iterations + 1];
@@ -32,12 +32,12 @@ namespace Perturbation {
 	}
 
 	void PerturbationEvaluator::Evaluate(IRasterizingInterface rasterizingInterface) {
-		HRReal x, y;
+		real_hr x, y;
 		while (rasterizingInterface.GetPixel(x, y)) {
 			complex dc = { real(x), real(y) };
 			complex Z = 0.0, z = 0.0, dz = 0.0;
 
-			ITUInt i = 0, j = 0;
+			uint_iter i = 0, j = 0;
 			while (i < parameters.Iterations) {
 				dz = dz * (Z + z) + dc;
 				i++; j++;
