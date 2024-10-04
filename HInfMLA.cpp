@@ -51,10 +51,10 @@ namespace HInfMLA {
 		real minMagnitude = magnitude(reference[1]);
 		real prevMinMagnitude = minMagnitude;
 
-		LAStep step = LAStep(0, 0.0, reference[1]);
+		LAStep step = LAStep(0, 0.0);
 
 		size_t i;
-		for (i = 2; i < referenceLength; i++) {
+		for (i = 1; i < referenceLength; i++) {
 			real magnitudeZ = magnitude(reference[i]);
 
 			if (magnitudeZ < minMagnitude) {
@@ -111,9 +111,9 @@ namespace HInfMLA {
 		real minMagnitude = magnitude(LASteps[i + 1].Z);
 		real prevMinMagnitude = minMagnitude;
 
-		LAStep step = LASteps[i].Composite(LASteps[i + 1]);
+		LAStep step = LASteps[i];
 		step.NextStageLAIndex = i;
-		i += 2;
+		i++;
 
 		for (; i < prevStage.End; i++) {
 			real magnitudeZ = magnitude(LASteps[i].Z);

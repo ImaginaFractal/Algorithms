@@ -26,12 +26,6 @@ namespace HInfMLA {
 		explicit LAStep(size_t i, complex z) :
 			Z(z), A(1.0), B(1.0), ValidRadius(1.0), ValidRadiusC(1.0), Length(1), NextStageLAIndex(i) {}
 
-		LAStep(size_t i, complex z0, complex z1) :
-			Z(z0), A(real(2.0) * z1), B(A + 1.0),
-			ValidRadius(magnitude(z1) * ValidRadiusScale),
-			ValidRadiusC(ValidRadius),
-			Length(2), NextStageLAIndex(i) {}
-
 		LAStep &operator=(const LAStep &) = default;
 		LAStep &operator=(LAStep &&) = default;
 
