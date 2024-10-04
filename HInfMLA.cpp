@@ -58,13 +58,13 @@ namespace HInfMLA {
 			real magnitudeZ = magnitude(reference[i]);
 
 			if (magnitudeZ < minMagnitude) {
-				if (magnitudeZ < minMagnitude * DipDetectionThreshold) {
+				prevMinMagnitude = minMagnitude;
+				minMagnitude = magnitudeZ;
+
+				if (minMagnitude < prevMinMagnitude * DipDetectionThreshold) {
 					Period = i;
 					break;
 				}
-
-				prevMinMagnitude = minMagnitude;
-				minMagnitude = magnitudeZ;
 			}
 
 			step = step.Step(reference[i]);
@@ -119,13 +119,13 @@ namespace HInfMLA {
 			real magnitudeZ = magnitude(LASteps[i].Z);
 
 			if (magnitudeZ < minMagnitude) {
-				if (magnitudeZ < minMagnitude * DipDetectionThreshold) {
+				prevMinMagnitude = minMagnitude;
+				minMagnitude = magnitudeZ;
+
+				if (minMagnitude < prevMinMagnitude * DipDetectionThreshold) {
 					Period = step.Length;
 					break;
 				}
-
-				prevMinMagnitude = minMagnitude;
-				minMagnitude = magnitudeZ;
 			}
 
 			step = step.Composite(LASteps[i]);
