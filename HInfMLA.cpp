@@ -1,13 +1,13 @@
 #include <imagina/pixel_management.h>
 #include <imagina/output_info_helper.h>
-#include "HInfLA.h"
+#include "HInfMLA.h"
 
-namespace HinfLA {
-	const Imagina::PixelDataInfo *HInfLAEvaluator::GetOutputInfo() {
+namespace HInfMLA {
+	const Imagina::PixelDataInfo *HInfMLAEvaluator::GetOutputInfo() {
 		IM_GET_OUTPUT_INFO_IMPL(Output, Value);
 	}
 
-	void HInfLAEvaluator::Prepare(const real_hp &x, const real_hp &y, real_hr radius, const StandardEvaluationParameters &parameters) {
+	void HInfMLAEvaluator::Prepare(const real_hp &x, const real_hp &y, real_hr radius, const StandardEvaluationParameters &parameters) {
 		this->parameters = parameters;
 		delete[] reference;
 		LAStages.clear();
@@ -19,7 +19,7 @@ namespace HinfLA {
 		if (!CreateLAFromOrbit()) return;
 		while (CreateNewLAStage());
 	}
-	void HInfLAEvaluator::ComputeOrbit(const real_hp &x, const real_hp &y, real_hr radius) {
+	void HInfMLAEvaluator::ComputeOrbit(const real_hp &x, const real_hp &y, real_hr radius) {
 		reference = new complex[parameters.Iterations + 1];
 
 		complex_hp C = complex_hp(x, y);
@@ -45,20 +45,29 @@ namespace HinfLA {
 		referenceLength = i;
 	}
 
-	bool HInfLAEvaluator::CreateLAFromOrbit() {
+	bool HInfMLAEvaluator::CreateLAFromOrbit() {
 		size_t Period = 0;
+
+		real minMagnitude = magnitude(reference[1]);
+		real prevMinMagnitude = minMagnitude;
 
 		LAStep step = LAStep(0, 0.0, reference[1]);
 
 		size_t i;
 		for (i = 2; i < referenceLength; i++) {
-			auto [newStep, dipDetected] = step.Step(reference[i]);
+			real magnitudeZ = magnitude(reference[i]);
 
-			if (dipDetected) {
-				Period = i;
-				break;
+			if (magnitudeZ < minMagnitude) {
+				if (magnitudeZ < minMagnitude * DipDetectionThreshold) {
+					Period = i;
+					break;
+				}
+
+				prevMinMagnitude = minMagnitude;
+				minMagnitude = magnitudeZ;
 			}
-			step = newStep;
+
+			step = step.Step(reference[i]);
 		}
 
 		LASteps.push_back(step);
@@ -70,27 +79,18 @@ namespace HinfLA {
 			return false;
 		}
 
-		if (i + 1 >= referenceLength) {
-			step = LAStep(i, reference[i]);
-			i++;
-		} else {
-			step = LAStep(i, reference[i], reference[i + 1]);
-			i += 2;
-		}
-		for (; i < referenceLength; i++) {
-			auto [newStep, dipDetected] = step.Step(reference[i]);
+		real threshold = prevMinMagnitude * sqrt(minMagnitude / prevMinMagnitude);
 
-			if (dipDetected || step.Length >= Period) {
+		step = LAStep(i, reference[i]);
+		i++;
+
+		for (; i < referenceLength; i++) {
+			if (magnitude(reference[i]) < threshold || step.Length >= Period) {
 				LASteps.push_back(step);
 
-				if (i + 1 >= referenceLength || newStep.DetectDip(reference[i + 1])) {
-					step = LAStep(i, reference[i]);
-				} else {
-					step = LAStep(i, reference[i], reference[i + 1]);
-					i++;
-				}
+				step = LAStep(i, reference[i]);
 			} else {
-				step = newStep;
+				step = step.Step(reference[i]);
 			}
 		}
 
@@ -101,63 +101,59 @@ namespace HinfLA {
 		return true;
 	}
 
-	bool HInfLAEvaluator::CreateNewLAStage() {
+	bool HInfMLAEvaluator::CreateNewLAStage() {
 		LAStageInfo prevStage = LAStages.back();
 		size_t begin = LASteps.size();
 
 		size_t Period = 0;
 		size_t i = prevStage.Begin;
 
-		LAStep step = LASteps[i].Composite(LASteps[i + 1]).first;
+		real minMagnitude = magnitude(LASteps[i + 1].Z);
+		real prevMinMagnitude = minMagnitude;
+
+		LAStep step = LASteps[i].Composite(LASteps[i + 1]);
 		step.NextStageLAIndex = i;
 		i += 2;
 
 		for (; i < prevStage.End; i++) {
-			auto [newStep, dipDetected] = step.Composite(LASteps[i]);
+			real magnitudeZ = magnitude(LASteps[i].Z);
 
-			if (dipDetected) {
-				Period = step.Length;
-
-				LASteps.push_back(step);
-
-				if (i + 1 >= prevStage.End || newStep.DetectDip(LASteps[i + 1].Z)) {
-					step = LASteps[i];
-					step.NextStageLAIndex = i;
-					i++;
-				} else {
-					step = LASteps[i].Composite(LASteps[i + 1]).first;
-					step.NextStageLAIndex = i;
-					i += 2;
+			if (magnitudeZ < minMagnitude) {
+				if (magnitudeZ < minMagnitude * DipDetectionThreshold) {
+					Period = step.Length;
+					break;
 				}
-				break;
+
+				prevMinMagnitude = minMagnitude;
+				minMagnitude = magnitudeZ;
 			}
-			step = newStep;
+
+			step = step.Composite(LASteps[i]);
 		}
 
+		LASteps.push_back(step);
+
 		if (!Period) {
-			LASteps.push_back(step);
 			LAStages.push_back({ begin, LASteps.size() });
 			LASteps.push_back(LASteps[prevStage.End]);
 
 			return false;
 		}
 
-		for (; i < prevStage.End; i++) {
-			auto [newStep, dipDetected] = step.Composite(LASteps[i]);
+		real threshold = prevMinMagnitude * sqrt(minMagnitude / prevMinMagnitude);
 
-			if (dipDetected || step.Length >= Period) {
+		step = LASteps[i];
+		step.NextStageLAIndex = i;
+		i++;
+
+		for (; i < prevStage.End; i++) {
+			if (magnitude(LASteps[i].Z) < threshold || step.Length >= Period) {
 				LASteps.push_back(step);
 
-				if (i + 1 >= prevStage.End || newStep.DetectDip(LASteps[i + 1].Z)) {
-					step = LASteps[i];
-					step.NextStageLAIndex = i;
-				} else {
-					step = LASteps[i].Composite(LASteps[i + 1]).first;
-					step.NextStageLAIndex = i;
-					i++;
-				}
+				step = LASteps[i];
+				step.NextStageLAIndex = i;
 			} else {
-				step = newStep;
+				step = step.Composite(LASteps[i]);
 			}
 		}
 
@@ -168,7 +164,7 @@ namespace HinfLA {
 		return true;
 	}
 
-	void HInfLAEvaluator::Evaluate(IRasterizingInterface rasterizingInterface) {
+	void HInfMLAEvaluator::Evaluate(IRasterizingInterface rasterizingInterface) {
 		real_hr x, y;
 		while (rasterizingInterface.GetPixel(x, y)) {
 			complex dc = { real(x), real(y) };

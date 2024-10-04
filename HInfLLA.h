@@ -2,7 +2,7 @@
 #include <imagina/evaluator.h>
 #include <vector>
 
-namespace HinfLA {
+namespace HInfLLA {
 	using namespace Imagina;
 
 	inline real_sr magnitude(const complex_sr &z) {
@@ -68,7 +68,7 @@ namespace HinfLA {
 			result.A = 2.0 * step.Z * A;
 			result.B = 2.0 * step.Z * B;
 
-			bool dipDetected = result.ValidRadius < ValidRadius *DipDetectionThreshold;
+			bool dipDetected = result.ValidRadius < ValidRadius * DipDetectionThreshold;
 
 			result.ValidRadius = std::min(result.ValidRadius, step.ValidRadius / magnitude(result.A));
 			result.ValidRadiusC = std::min(result.ValidRadiusC, step.ValidRadius / magnitude(result.B));
@@ -83,7 +83,7 @@ namespace HinfLA {
 		}
 	};
 
-	class HInfLAEvaluator {
+	class HInfLLAEvaluator {
 		using real = real_sr;
 		using complex = complex_sr;
 		struct Output {
@@ -115,4 +115,4 @@ namespace HinfLA {
 	};
 }
 
-IMPLEMENT_INTERFACE(HinfLA::HInfLAEvaluator, Imagina::IEvaluator);
+IMPLEMENT_INTERFACE(HInfLLA::HInfLLAEvaluator, Imagina::IEvaluator);
