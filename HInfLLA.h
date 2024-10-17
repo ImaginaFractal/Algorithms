@@ -111,7 +111,7 @@ namespace HInfLLA {
 		const PixelDataInfo *GetOutputInfo();
 
 		void Prepare(const real_hp &x, const real_hp &y, real_hr radius, const StandardEvaluationParameters &parameters);
-		void Evaluate(IRasterizingInterface rasterizingInterface);
+		void Evaluate(IRasterizer rasterizer);
 	};
 }
 

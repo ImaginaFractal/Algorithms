@@ -164,9 +164,9 @@ namespace HInfMLA {
 		return true;
 	}
 
-	void HInfMLAEvaluator::Evaluate(IRasterizingInterface rasterizingInterface) {
+	void HInfMLAEvaluator::Evaluate(IRasterizer rasterizer) {
 		real_hr x, y;
-		while (rasterizingInterface.GetPixel(x, y)) {
+		while (rasterizer.GetPixel(x, y)) {
 			complex dc = { real(x), real(y) };
 			complex Z = 0.0, z = 0.0, dz = 0.0;
 			real norm_dc = chebyshev_norm(dc);
@@ -223,7 +223,7 @@ namespace HInfMLA {
 			Output output;
 			output.Value = i;
 
-			rasterizingInterface.WriteResults(&output);
+			rasterizer.WriteResults(&output);
 		}
 	}
 }

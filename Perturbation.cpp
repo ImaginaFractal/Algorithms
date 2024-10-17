@@ -31,9 +31,9 @@ namespace Perturbation {
 		referenceLength = i;
 	}
 
-	void PerturbationEvaluator::Evaluate(IRasterizingInterface rasterizingInterface) {
+	void PerturbationEvaluator::Evaluate(IRasterizer rasterizer) {
 		real_hr x, y;
-		while (rasterizingInterface.GetPixel(x, y)) {
+		while (rasterizer.GetPixel(x, y)) {
 			complex dc = { real(x), real(y) };
 			complex Z = 0.0, z = 0.0, dz = 0.0;
 
@@ -57,7 +57,7 @@ namespace Perturbation {
 			Output output;
 			output.Value = i;
 
-			rasterizingInterface.WriteResults(&output);
+			rasterizer.WriteResults(&output);
 		}
 	}
 }
